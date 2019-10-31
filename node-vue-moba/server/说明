@@ -1,0 +1,27 @@
+--save       // 将模块依赖关系写入到package.json文件的dependencies参数中
+-dev         // 将模块依赖关系写入到package.json文件的devDependencies参数中
+-g           // 表示全局
+@+version    // 安装指定版本
+
+npm i -g @vue/cli    全局安装vuecli
+npm i -g nodemon   全局安装nodemon  在开发环境下，往往需要一个工具来自动重启项目工程
+
+vue create admin
+vue create web
+
+vue add element
+vue add router
+
+作用：在当前bash环境下读取并执行FileName中的命令。
+
+注：该命令通常用命令".”来替代。
+
+使用范例：
+
+1、source filename
+
+2、. filename #（中间有空格） 
+
+npm i express@next mongose cors  安装 express mongose corss
+
+rm -rf node_modules 删除该文件夹
