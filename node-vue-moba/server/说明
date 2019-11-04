@@ -12,6 +12,8 @@ vue create web
 vue add element
 vue add router
 
+npm i inflection 该包可将小写复数英文改成大写英文单数 categories => Category
+
 作用：在当前bash环境下读取并执行FileName中的命令。
 
 注：该命令通常用命令".”来替代。
