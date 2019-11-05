@@ -8,12 +8,10 @@ const app = express()
 
 app.use(require('cors')())
 app.use(express.json())
+app.use('/uploads', express.static(__dirname + '/uploads')) //托管静态文件 uploads目录下为静态文件夹，可以通过uploads路径来访问
 require('./plugins/db')(app)  //这是一个函数 执行它并把 app传进去
 require('./routes/admin')(app)  //这是一个函数 执行它并把 app传进去
 
-app.get('/', function (req, res) {
-  res.send('Hello World');
-})
 
 var server = app.listen(3000,()=>{
   var host = server.address().address
