@@ -14,6 +14,11 @@
             <el-menu-item index="/items/create">新建物品</el-menu-item>
             <el-menu-item index="/items/list">物品列表</el-menu-item>
           </el-menu-item-group>
+          <el-menu-item-group>
+            <template slot="title">账号</template>
+            <el-menu-item index="/admin_users/create">新建管理员</el-menu-item>
+            <el-menu-item index="/admin_users/list">管理员列表</el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </el-aside>

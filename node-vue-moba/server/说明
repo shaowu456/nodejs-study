@@ -13,8 +13,9 @@ vue add element
 vue add router
 
 npm i inflection 该包可将小写复数英文改成大写英文单数 categories => Category
-npm i multer 处理文件图片等的中间件
-
+npm i multer 后台处理文件图片等的中间件
+npm i bcrypt 后台做密码的散列 职业操守 比md5强
+npm i jsonwebtoken 后台比较流行的做web token验证的
 作用：在当前bash环境下读取并执行FileName中的命令。
 
 注：该命令通常用命令".”来替代。
