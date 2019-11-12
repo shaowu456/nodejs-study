@@ -8,6 +8,21 @@ Vue.prototype.$http = http
 
 Vue.config.productionTip = false
 
+Vue.mixin({   //mixin 混合入 为所有的vue对象都添加该代码块
+  computed: {
+    uploadUrl(){
+      return this.$http.defaults.baseURL + '/upload'
+    }
+  },
+  methods:{
+    getAuthHeader(){
+      return {
+        Authorization: `Bearer ${localStorage.token || ''}`
+      }
+    }
+  }
+})
+
 new Vue({
   router,
   render: h => h(App)
