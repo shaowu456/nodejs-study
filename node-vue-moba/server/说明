@@ -1,5 +1,5 @@
---save       // 将模块依赖关系写入到package.json文件的dependencies参数中
--dev         // 将模块依赖关系写入到package.json文件的devDependencies参数中
+--save or -S    // 将模块依赖关系写入到package.json文件的dependencies参数中
+-dev or -D      // 将模块依赖关系写入到package.json文件的devDependencies参数中
 -g           // 表示全局
 @+version    // 安装指定版本
 
@@ -30,3 +30,5 @@ npm i http-assert 后台比较流行的 中断程序抛出错误，错误码，�
 npm i express@next mongose cors  安装 express mongose corss
 
 rm -rf node_modules 删除该文件夹
+
+shell 有问题找 -man

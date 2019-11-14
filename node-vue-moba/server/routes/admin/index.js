@@ -11,6 +11,7 @@ module.exports = app => {
   // 新增分类
   router.post('/', async (req, res) => {
     const model = await req.Model.create(req.body)
+    console.log(require('bcrypt').hashSync('admin', 10))
     res.send(model)
   })
   // 修改分类
@@ -43,7 +44,8 @@ module.exports = app => {
   })
 
   //登录校验中间件
-  const authMiddleware = require('../../middleware/auth')
+  // const authMiddleware = require('../../middleware/auth')
+  const authMiddleware = require('../../middleware/auth2') //不校验
   //资源中间件
   const resourceMiddleware = require('../../middleware/resource')
   app.use('/admin/api/rest/:resource', authMiddleware(), resourceMiddleware(), router) // 挂载子路由
