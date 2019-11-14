@@ -44,8 +44,8 @@ module.exports = app => {
   })
 
   //登录校验中间件
-  // const authMiddleware = require('../../middleware/auth')
-  const authMiddleware = require('../../middleware/auth2') //不校验
+  const authMiddleware = require('../../middleware/auth')
+  // const authMiddleware = require('../../middleware/auth2') //不校验
   //资源中间件
   const resourceMiddleware = require('../../middleware/resource')
   app.use('/admin/api/rest/:resource', authMiddleware(), resourceMiddleware(), router) // 挂载子路由

@@ -24,6 +24,8 @@ const schema = new mongoose.Schema({
   usageTips: { type: String },
   battleTips: { type: String },
   teamTips: { type: String },
+  delay:{ type: String },
+  cost:{ type: String },
   patners: [{ //最佳搭档
     hero: { type: mongoose.SchemaTypes.ObjectId, ref: 'Hero'},
     description: { type: String }
