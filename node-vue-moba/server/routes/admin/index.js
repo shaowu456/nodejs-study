@@ -37,6 +37,7 @@ module.exports = app => {
     // const items = await req.Model.find().limit(10)  // 关联查询parent
     res.send(items)
   })
+  
   // 资源详情
   router.get('/:id', async (req, res) => {
     const model = await req.Model.findById(req.params.id)
@@ -79,6 +80,21 @@ module.exports = app => {
     // 3.返回token
     const token = jwt.sign({ id: user._id }, app.get('secret'))
     res.send({ token })
+  })
+  // 查询上级分类为固定值的资源列表
+  app.get('/admin/api/findListByParent/:id', authMiddleware(), async (req, res) => {
+    console.log('+++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    const parentId = req.body
+    console.log(parentId)
+    const Model = require(`../../models/Category`)
+    const queryOptions = {}
+    // const temp = req.body
+    if (Model.modelName === 'Category') {
+      queryOptions.populate = 'parent'
+    }
+    const items = await Model.find({parent:req.params.id}).limit(20)  // 关联查询parent
+    // const items = await req.Model.find({name:/天/}).limit(10)  // 关联查询parent
+    res.send(items)
   })
   // 错误处理函数
   app.use(async (err, req, res, next) => {
