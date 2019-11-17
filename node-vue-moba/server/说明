@@ -1,3 +1,16 @@
+
+设置源为淘宝镜像 npm config set registry http://registry.npm.taobao.org/
+还原 npm config set registry https://registry.npmjs.org/
+npm i -g nrm 快速切换 淘宝镜像的工具
+npm i -g n 一个可以升级node本身的包
+npm i -g pm2 可以在后台运行服务器（nodejs） 本地开发用nodemon
+pm2命令
+    pm2 start index.js 启动服务
+    pm2 list 看启动了哪些服务
+    pm2 logs index   index为appname
+curl 请求一个地址 比如 curl http://localhost:3000
+n latest 使用最新版
+
 --save or -S    // 将模块依赖关系写入到package.json文件的dependencies参数中
 -dev or -D      // 将模块依赖关系写入到package.json文件的devDependencies参数中
 -g           // 表示全局
@@ -17,6 +30,7 @@ npm i multer 后台处理文件图片等的中间件
 npm i bcrypt 后台做密码的散列 职业操守 比md5强
 npm i jsonwebtoken 后台比较流行的做web token验证的
 npm i http-assert 后台比较流行的 中断程序抛出错误，错误码，错误信息
+npm i -g serve 全局服务器，可以直接使用serve 文件夹目录打开其中index.html
 作用：在当前bash环境下读取并执行FileName中的命令。
 
 注：该命令通常用命令".”来替代。
@@ -32,3 +46,6 @@ npm i express@next mongose cors  安装 express mongose corss
 rm -rf node_modules 删除该文件夹
 
 shell 有问题找 -man
+
+mac 上 
+ssh root@111.231.100.197

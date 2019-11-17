@@ -8,6 +8,7 @@ app.set('secret', 'i2u34y12oi3u4y8')
 
 app.use(require('cors')())
 app.use(express.json())
+app.use('/admin', express.static(__dirname + '/admin')) //托管静态文件 将admin目录下文件托管到/admin这个路径
 app.use('/uploads', express.static(__dirname + '/uploads')) //托管静态文件 uploads目录下为静态文件夹，可以通过uploads路径来访问
 require('./plugins/db')(app)  //这是一个函数 执行它并把 app传进去
 require('./routes/admin')(app)  //这是一个函数 执行它并把 app传进去

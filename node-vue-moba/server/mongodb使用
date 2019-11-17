@@ -21,3 +21,15 @@ mongod
 
 6、操作数据库 终端输入mongo
 关闭数据库 use admin; db.shutdownServer();
+
+liunx情况下
+
+yum install -y mongodb-server 下载mongodb-server
+
+sudo service mongod start 启动
+
+service mongod stop 停止
+
+sudo service mongod restart 重启
+
+tail -f /var/log/mongodb/mongod.log 查看日志
