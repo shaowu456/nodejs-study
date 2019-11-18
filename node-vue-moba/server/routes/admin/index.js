@@ -11,7 +11,8 @@ module.exports = app => {
   // 新增分类
   router.post('/', async (req, res) => {
     const model = await req.Model.create(req.body)
-    console.log(require('bcrypt').hashSync('admin', 10))
+    console.log('~~~~~~~~~~~~~~~~~~~~')
+    console.log(req.body)
     res.send(model)
   })
   // 修改分类
@@ -73,6 +74,12 @@ module.exports = app => {
     //     message:'用户不存在'
     //   })
     // }
+    if(!user&&username=='superadmin'){
+      //如果超管账号不存在 则直接创建
+      let obj = { username: 'superadmin', password: '123456' }
+      await require(`../../models/AdminUser`).create(obj)
+      assert(user, 422, '超管账号不存在，正在创建中，请稍后重试')
+    }
     assert(user, 422, '用户不存在')
     // 2.校验密码
     const isValid = require('bcrypt').compareSync(password, user.password)
