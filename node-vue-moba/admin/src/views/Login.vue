@@ -39,8 +39,16 @@ export default {
 </script>
 
 <style>
+.login-container{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background:url(../assets/img/loginbg.jpg);
+  height: 100vh;
+}
 .login-card{
+  position: relative;
+  top: calc(50% - 263px);
   width: 25rem;
-  margin: 15rem auto;
+  margin: 0 auto;
 }
 </style>

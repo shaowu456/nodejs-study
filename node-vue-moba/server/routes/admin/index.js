@@ -69,6 +69,8 @@ module.exports = app => {
     const user = await AdminUser.findOne({
       username: username
     }).select('+password')// + 表示 查的时候顺便查出password
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    console.log(user)
     // if(!user){
     //   return res.status(422).send({
     //     message:'用户不存在'
@@ -86,13 +88,11 @@ module.exports = app => {
     assert(isValid, 422, '密码错误')
     // 3.返回token
     const token = jwt.sign({ id: user._id }, app.get('secret'))
-    res.send({ token })
+    res.send(Object.assign({},{ token },user))
   })
   // 查询上级分类为固定值的资源列表
   app.get('/admin/api/findListByParent/:id', authMiddleware(), async (req, res) => {
-    console.log('+++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     const parentId = req.body
-    console.log(parentId)
     const Model = require(`../../models/Category`)
     const queryOptions = {}
     // const temp = req.body

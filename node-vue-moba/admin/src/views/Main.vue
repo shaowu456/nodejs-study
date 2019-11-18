@@ -20,6 +20,11 @@
             <el-menu-item index="/heroes/list">英雄列表</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
+            <template slot="title">客户</template>
+            <el-menu-item index="/customers/create">新建客户</el-menu-item>
+            <el-menu-item index="/customers/list">客户列表</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
             <template slot="title">账号</template>
             <el-menu-item index="/admin_users/create">新建管理员</el-menu-item>
             <el-menu-item index="/admin_users/list">管理员列表</el-menu-item>
@@ -30,15 +35,13 @@
     
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
+        <span>王小虎</span>
+        <el-dropdown trigger="click">
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
+            <el-dropdown-item @click.native.prevent="leave">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
       </el-header>
       
       <el-main>
@@ -70,6 +73,14 @@
       };
       return {
         tableData: Array(20).fill(item)
+      }
+    },
+    methods: {
+      leave(){
+        console.log('xxxx')
+        debugger
+        localStorage.clear()
+        this.$router.push('/login')
       }
     }
   };
