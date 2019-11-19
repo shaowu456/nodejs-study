@@ -35,7 +35,7 @@
     
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <span>王小虎</span>
+        <span>{{username}}</span>
         <el-dropdown trigger="click">
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
@@ -64,6 +64,7 @@
 </style>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     data() {
       const item = {
@@ -72,13 +73,18 @@
         address: '上海市普陀区金沙江路 1518 弄'
       };
       return {
+        username:'',
         tableData: Array(20).fill(item)
       }
     },
+    computed: {
+    ...mapGetters(['logininfo'])
+    },
+    mounted(){
+      this.username = this.logininfo._doc.username
+    },
     methods: {
       leave(){
-        console.log('xxxx')
-        debugger
         localStorage.clear()
         this.$router.push('/login')
       }

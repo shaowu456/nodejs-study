@@ -11,7 +11,6 @@
         <el-form-item>
           <el-button type="primary" native-type="submit">登录</el-button>
         </el-form-item>
-        
       </el-form>
     </el-card>
   </div>
@@ -25,7 +24,8 @@ export default {
   },
   methods: {
     async login(){
-      const res = await this.$http.post('login', this.model)
+      // const res = await this.$http.post('login', this.model)
+      const res = await this.$store.dispatch('login', this.model)
       // sessionStorage.token = res.data.token
       localStorage.token = res.data.token
       this.$router.push('/')
