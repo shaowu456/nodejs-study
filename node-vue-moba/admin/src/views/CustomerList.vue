@@ -1,7 +1,25 @@
 <template>
   <div>
     <h1>客户列表</h1>
-    <el-table :data="items">
+    <el-form label-position="right"
+             inline>
+      <el-row>
+        <el-form-item label="姓名">
+          <el-input v-model="model.name"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号码">
+          <el-input v-model="model.phone"></el-input>
+        </el-form-item>
+        <el-button size="medium"
+                   class="goodsbtnbox"
+                   @click="query"
+                   type="primary">查询</el-button>
+        <el-button size="medium"
+                   class="goodsbtnbox"
+                   @click="resetQuery">重置</el-button>
+      </el-row>
+    </el-form>
+    <el-table border :data="items">
       <!-- <el-table-column prop="_id" label="ID" width="240"></el-table-column> -->
       <el-table-column prop="name" label="客户名称"></el-table-column>
       <el-table-column prop="phone" label="手机号码"></el-table-column>
@@ -30,10 +48,26 @@
 export default {
   data() {
     return {
+      model: {
+        name: '',
+        phone: ''
+      },
       items: []
     };
   },
   methods: {
+     async query() {
+   // const res = await this.$http.post('login', this.model)
+      const res = await this.$http.post(`findCustomers`,{name:this.model.name, phone:this.model.phone});
+      this.items = res.data;
+    },
+    resetQuery() {
+      this.model = {
+        name: '',
+        phone: ''
+      }
+      this.fetch()
+    },
     async fetch() {
       const res = await this.$http.get("rest/customers");
       this.items = res.data;

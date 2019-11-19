@@ -1,11 +1,9 @@
 <template>
   <div class="about">
     <h1>{{id ? '编辑' : '新建'}}客户</h1>
-    <el-form label-width="120px"
-             @submit.native.prevent="save">
-      <el-tabs value="skills"
-               type="border-card">
-        <el-tab-pane label="基础信息">
+    <el-form label-width="120px" @submit.native.prevent="save">
+      <el-tabs value="bases" type="border-card">
+        <el-tab-pane name="bases" label="基础信息">
           <el-form-item label="姓名">
             <el-input v-model="model.name"></el-input>
           </el-form-item>
@@ -13,86 +11,74 @@
             <el-input v-model="model.phone"></el-input>
           </el-form-item>
           <el-form-item label="头像">
-            <el-upload class="avatar-uploader"
-                       :action="$http.defaults.baseURL+'/upload'"
-                       :headers="getAuthHeader()"
-                       :show-file-list="false"
-                       :on-success="afterUpload"
-                       :before-upload="beforeAvatarUpload">
-              <img v-if="model.avatar"
-                   :src="model.avatar"
-                   class="avatar" />
-              <i v-else
-                 class="el-icon-plus avatar-uploader-icon"></i>
+            <el-upload
+              class="avatar-uploader"
+              :action="$http.defaults.baseURL+'/upload'"
+              :headers="getAuthHeader()"
+              :show-file-list="false"
+              :on-success="afterUpload"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="model.avatar" :src="model.avatar" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
           <el-form-item label="性别">
-            <el-select v-model="model.sex"
-                       >
-              <el-option v-for="item of categories"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value"></el-option>
+            <el-select v-model="model.sex">
+              <el-option
+                v-for="item of categories"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="地址">
             <el-input v-model="model.address"></el-input>
           </el-form-item>
         </el-tab-pane>
-        <el-tab-pane name="skills"
-                     label="详情">
-          <el-button size="small"
-                     @click="model.skills.push({})">
-            <i class="el-icon-plus"></i> 添加详情
+        <el-tab-pane name="skills" label="详情">
+          <el-button size="small" @click="model.skills.push({})">
+            <i class="el-icon-plus"></i> 添加
           </el-button>
-          <el-row type="flex"
-                  style="flex-wrap: wrap">
-            <el-col :md="12"
-                    v-for="(item, i) in model.skills"
-                    :key="i">
+          <el-row type="flex" style="flex-wrap: wrap">
+            <el-col :md="12" v-for="(item, i) in model.skills" :key="i">
               <el-form-item label="名称">
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
               <el-form-item label="图标">
-                <el-upload class="avatar-uploader"
-                           :action="uploadUrl"
-                           :headers="getAuthHeader()"
-                           :show-file-list="false"
-                           :on-success="res => $set(item, 'icon', res.url)">
-                  <img v-if="item.icon"
-                       :src="item.icon"
-                       class="avatar">
-                  <i v-else
-                     class="el-icon-plus avatar-uploader-icon"></i>
+                <el-upload
+                  class="avatar-uploader"
+                  :action="uploadUrl"
+                  :headers="getAuthHeader()"
+                  :show-file-list="false"
+                  :on-success="res => $set(item, 'icon', res.url)"
+                >
+                  <img v-if="item.icon" :src="item.icon" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
-              <el-form-item label="冷却值">
-                <el-input v-model="item.delay"></el-input>
-              </el-form-item>
-              <el-form-item label="消耗">
-                <el-input v-model="item.cost"></el-input>
+              <el-form-item label="创建日期">
+                <el-date-picker
+                  v-model="item.createDate"
+                  align="right"
+                  type="date"
+                  placeholder="选择日期"
+                  :picker-options="pickerOptions1"
+                ></el-date-picker>
               </el-form-item>
               <el-form-item label="描述">
-                <el-input v-model="item.description"
-                          type="textarea"></el-input>
-              </el-form-item>
-              <el-form-item label="小提示">
-                <el-input v-model="item.tips"
-                          type="textarea"></el-input>
+                <el-input v-model="item.description" type="textarea"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button size="small"
-                           type="danger"
-                           @click="model.skills.splice(i, 1)">删除</el-button>
+                <el-button size="small" type="danger" @click="model.skills.splice(i, 1)">删除</el-button>
               </el-form-item>
             </el-col>
           </el-row>
         </el-tab-pane>
       </el-tabs>
       <el-form-item>
-        <el-button type="primary"
-                   style="margin-top:2rem"
-                   native-type="submit">保存</el-button>
+        <el-button type="primary" style="margin-top:2rem" native-type="submit">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -103,34 +89,65 @@ export default {
   props: {
     id: {}
   },
-  data () {
+  data() {
     return {
       categories: [
         {
-          label: '男',
-          value: '男'
+          label: "男",
+          value: "男"
         },
         {
-          label: '女',
-          value: '女'
-        },
+          label: "女",
+          value: "女"
+        }
       ],
       items: [],
       model: {
         name: "",
         avatar: "",
-        skills: [],
+        skills: []
+      },
+      createDate: '',
+      pickerOptions1: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            }
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
+          }
+        ]
       }
     };
   },
   methods: {
-    async save () {
+    async save() {
       // eslint-disable-next-line no-unused-vars
       let res;
+      let params = Object.assign({},this.model)
       if (this.id) {
-        res = await this.$http.put(`rest/customers/${this.id}`, this.model);
+        res = await this.$http.put(`rest/customers/${this.id}`, params);
       } else {
-        res = await this.$http.post("rest/customers", this.model);
+        res = await this.$http.post("rest/customers", params);
       }
       this.$router.push("/customers/list");
       this.$message({
@@ -138,16 +155,16 @@ export default {
         message: "保存成功"
       });
     },
-    async fetch () {
+    async fetch() {
       const res = await this.$http.get(`rest/customers/${this.id}`);
       this.model = Object.assign({}, this.model, res.data);
     },
-    afterUpload (res) {
+    afterUpload(res) {
       // console.log(res)
       // this.model.avater = res.url
-      this.$set(this.model, 'avatar', res.url) //显示赋值
+      this.$set(this.model, "avatar", res.url); //显示赋值
     },
-    beforeAvatarUpload (file) {
+    beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -159,12 +176,12 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    async fetchItems () {
+    async fetchItems() {
       const res = await this.$http.get(`rest/items`);
       this.items = res.data;
-    },
+    }
   },
-  created () {
+  created() {
     this.fetchItems();
     this.id && this.fetch();
   }

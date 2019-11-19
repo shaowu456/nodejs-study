@@ -20,6 +20,7 @@ const schema = new mongoose.Schema({
     icon: { type: String },
     name: { type: String },
     description: { type: String },
+    createDate: { type: String },
     delay:{ type: String },
     cost:{ type: String },
     tips: { type: String }

@@ -38,7 +38,7 @@ module.exports = app => {
     // const items = await req.Model.find().limit(10)  // 关联查询parent
     res.send(items)
   })
-  
+
   // 资源详情
   router.get('/:id', async (req, res) => {
     const model = await req.Model.findById(req.params.id)
@@ -76,7 +76,7 @@ module.exports = app => {
     //     message:'用户不存在'
     //   })
     // }
-    if(!user&&username=='superadmin'){
+    if (!user && username == 'superadmin') {
       //如果超管账号不存在 则直接创建
       let obj = { username: 'superadmin', password: '123456' }
       await require(`../../models/AdminUser`).create(obj)
@@ -88,7 +88,7 @@ module.exports = app => {
     assert(isValid, 422, '密码错误')
     // 3.返回token
     const token = jwt.sign({ id: user._id }, app.get('secret'))
-    res.send(Object.assign({},{ token },user))
+    res.send(Object.assign({}, { token }, user))
   })
   // 查询上级分类为固定值的资源列表
   app.get('/admin/api/findListByParent/:id', authMiddleware(), async (req, res) => {
@@ -99,8 +99,21 @@ module.exports = app => {
     if (Model.modelName === 'Category') {
       queryOptions.populate = 'parent'
     }
-    const items = await Model.find({parent:req.params.id}).limit(20)  // 关联查询parent
+    const items = await Model.find({ parent: req.params.id }).limit(20)  // 关联查询parent
     // const items = await req.Model.find({name:/天/}).limit(10)  // 关联查询parent
+    res.send(items)
+  })
+  // 查询带模糊姓名的顾客列表
+  // app.post('/admin/api/login', async (req, res) => {
+  app.post('/admin/api/findCustomers', authMiddleware(), async (req, res) => {
+    const parentId = req.body
+    const Model = require(`../../models/Customer`)
+    // const items = await Model.find({parent:req.params.id}).limit(20)  // 关联查询parent
+    // const items = await Model.find({name:/'+req.body.name+'/}).limit(10)  // 关联查询parent
+    const items = await Model.find({
+      name: new RegExp(req.body.name),
+      phone: new RegExp(req.body.phone)
+    }).limit(10)  // 关联查询parent
     res.send(items)
   })
   // 错误处理函数

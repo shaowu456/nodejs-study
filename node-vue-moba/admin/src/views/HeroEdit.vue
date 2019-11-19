@@ -3,8 +3,8 @@
     <h1>{{id ? '编辑' : '新建'}}英雄</h1>
     <el-form label-width="120px"
              @submit.native.prevent="save">
-      <el-tabs value="skills" type="border-card">
-        <el-tab-pane label="基础信息">
+      <el-tabs value="bases" type="border-card">
+        <el-tab-pane name="bases" label="基础信息">
           <el-form-item label="名称">
             <el-input v-model="model.name"></el-input>
           </el-form-item>
@@ -50,7 +50,7 @@
               <el-option v-for="item of items" :key="item._id" :label="item.name" :value="item._id"></el-option>
             </el-select>
           </el-form-item>
-        </el-tab-pane>  
+        </el-tab-pane>
         <el-tab-pane name="skills" label="技能">
           <el-button size="small" @click="model.skills.push({})">
             <i class="el-icon-plus"></i> 添加技能
