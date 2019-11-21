@@ -7,6 +7,7 @@ const schema = new mongoose.Schema({
   avatar: { type: String },
   phone: { type: String },
   sex: { type: String },
+  age: { type: String },
   birthday: { type: String },
   address: { type: String },
   title: { type: String },

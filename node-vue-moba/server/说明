@@ -52,3 +52,7 @@ ssh root@111.231.100.197
 Bt-Panel-URL: http://111.231.100.197:8888/89c5049f
 username: zqyzz6th
 password: 28d04882
+
+模块化开发
+Node应用由模块组成，采用CommonJS模块规范。
+module.exports  与 exports  require

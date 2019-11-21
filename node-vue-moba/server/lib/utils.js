@@ -2,7 +2,7 @@
  * @param {String} 日期 年月日 1995-01-01
  * @description 根据传入出生日期返回年龄
  */
-export const jsGetAgeByBirth = (strBirthday) => {
+exports.jsGetAgeByBirth = (strBirthday) => {
   var returnAge;
   var strBirthdayArr = strBirthday.split("-");
   var birthYear = strBirthdayArr[0];
@@ -46,4 +46,8 @@ export const jsGetAgeByBirth = (strBirthday) => {
 
   return returnAge;//返回周岁年龄
 
+}
+
+exports.test = (strBirthday) => {
+  return 'yyyy-mm-dd'
 }

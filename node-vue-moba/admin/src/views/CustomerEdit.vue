@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>{{id ? '编辑' : '新建'}}客户</h1>
+    <h1 style="margin:0">{{id ? '编辑' : '新建'}}客户</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-tabs value="bases" type="border-card">
         <el-tab-pane name="bases" label="基础信息">
@@ -33,6 +33,19 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="出生日期">
+            <el-date-picker
+              v-model="model.birthday"
+              value-format="yyyy-MM-dd"
+              align="right"
+              type="date"
+              placeholder="选择日期"
+              :picker-options="pickerOptions1"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item label="年龄">
+            <el-input :disabled="true" v-model="model.age"></el-input>
+          </el-form-item>
           <el-form-item label="地址">
             <el-input v-model="model.address"></el-input>
           </el-form-item>
@@ -61,6 +74,7 @@
               <el-form-item label="创建日期">
                 <el-date-picker
                   v-model="item.createDate"
+                  value-format="yyyy-MM-dd"
                   align="right"
                   type="date"
                   placeholder="选择日期"
@@ -85,6 +99,7 @@
 </template>
 
 <script>
+import { jsGetAgeByBirth } from '@/lib/utils'
 export default {
   props: {
     id: {}
@@ -138,6 +153,13 @@ export default {
         ]
       }
     };
+  },
+  watch: {
+    'model.birthday'(val) {
+      debugger
+      console.log(val)
+      this.model.age = jsGetAgeByBirth(val)
+    }
   },
   methods: {
     async save() {

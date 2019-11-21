@@ -2,6 +2,7 @@ module.exports = app => {
   const express = require('express')
   const jwt = require('jsonwebtoken')
   const AdminUser = require('../../models/AdminUser')
+  const utils = require('../../lib/utils')
   const assert = require('http-assert')
   const router = express.Router({ // nodejs 子路由对象
     mergeParams: true
@@ -104,17 +105,25 @@ module.exports = app => {
     res.send(items)
   })
   // 查询带模糊姓名的顾客列表
-  // app.post('/admin/api/login', async (req, res) => {
   app.post('/admin/api/findCustomers', authMiddleware(), async (req, res) => {
-    const parentId = req.body
+    const {pageIndex, pageSize, name, phone } = req.body
     const Model = require(`../../models/Customer`)
-    // const items = await Model.find({parent:req.params.id}).limit(20)  // 关联查询parent
-    // const items = await Model.find({name:/'+req.body.name+'/}).limit(10)  // 关联查询parent
     const items = await Model.find({
-      name: new RegExp(req.body.name),
-      phone: new RegExp(req.body.phone)
-    }).limit(10)  // 关联查询parent
-    res.send(items)
+      name: new RegExp(name),
+      phone: new RegExp(phone)
+    }).skip((pageIndex-1) * pageSize).limit(pageSize)  // 关联查询parent
+    items.forEach(item => {
+      item.age = utils.jsGetAgeByBirth(item.birthday)
+    })
+    const count = await Model.where({
+      name: new RegExp(name),
+      phone: new RegExp(phone)
+    }).count()
+    let result = {
+      count,
+      items
+    }
+    res.send(result)
   })
   // 错误处理函数
   app.use(async (err, req, res, next) => {

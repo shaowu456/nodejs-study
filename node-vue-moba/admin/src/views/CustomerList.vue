@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>客户列表</h1>
     <el-form label-position="right"
              inline>
       <el-row>
@@ -19,61 +18,96 @@
                    @click="resetQuery">重置</el-button>
       </el-row>
     </el-form>
-    <el-table border :data="items">
+    <el-table border
+              :data="items">
       <!-- <el-table-column prop="_id" label="ID" width="240"></el-table-column> -->
-      <el-table-column prop="name" label="客户名称"></el-table-column>
-      <el-table-column prop="phone" label="手机号码"></el-table-column>
-      <el-table-column prop="sex" label="性别"></el-table-column>
-      <el-table-column prop="name" label="头像">
+      <el-table-column prop="name"
+                       label="客户名称"
+                       min-width="50"></el-table-column>
+      <el-table-column prop="phone"
+                       label="手机号码"
+                       min-width="60"></el-table-column>
+      <el-table-column prop="sex"
+                       label="性别"
+                       min-width="30"></el-table-column>
+      <el-table-column prop="age"
+                       label="年龄"
+                       min-width="50"></el-table-column>
+      <el-table-column prop="name"
+                       min-width="50"
+                       label="头像">
         <template slot-scope="scope">
-          <img :src="scope.row.avatar" alt="" style="height:4rem">
+          <img :src="scope.row.avatar"
+               alt=""
+               style="height:4rem">
         </template>
       </el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="180">
+      <el-table-column prop="address"
+                       label="地址"
+                       min-width="100"
+                       show-overflow-tooltip></el-table-column>
+      <el-table-column fixed="right"
+                       label="操作"
+                       width="120">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            size="small"
-            @click="$router.push(`/customers/edit/${scope.row._id}`)"
-          >编辑</el-button>
-          <el-button type="text" size="small" @click="remove(scope.row)">删除</el-button>
+          <el-button type="text"
+                     size="small"
+                     @click="$router.push(`/customers/edit/${scope.row._id}`)">编辑</el-button>
+          <el-button type="text"
+                     size="small"
+                     @click="remove(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-row>
+      <My-Pagination :querList="fetch"
+                     ref="paginations"
+                     :total="datatotal"
+                     style="float:right"></My-Pagination>
+    </el-row>
   </div>
 </template>
 
 <script>
+import MyPagination from '@/components/Pagination'
 export default {
-  data() {
+  components: {
+    MyPagination
+  },
+  data () {
     return {
       model: {
         name: '',
         phone: ''
       },
+      datatotal: 0,
       items: []
     };
   },
   methods: {
-     async query() {
-   // const res = await this.$http.post('login', this.model)
-      const res = await this.$http.post(`findCustomers`,{name:this.model.name, phone:this.model.phone});
-      this.items = res.data;
+    async query () {
+      this.fetch()
     },
-    resetQuery() {
+    resetQuery () {
       this.model = {
         name: '',
         phone: ''
       }
       this.fetch()
     },
-    async fetch() {
-      const res = await this.$http.get("rest/customers");
-      this.items = res.data;
+    async fetch () {
+      // const res = await this.$http.get("rest/customers");
+      const res = await this.$http.post(`findCustomers`, {
+         name: this.model.name, 
+         phone: this.model.phone,
+         pageIndex: this.$refs.paginations.currentPage, // 当前页
+         pageSize: this.$refs.paginations.pagesize // 每页大小
+         });
+      this.items = res.data.items;
+      this.datatotal = res.data.count
     },
-    remove(row) {
-      this.$confirm(`是否确定要删除英雄"${row.name}"`, "提示", {
+    remove (row) {
+      this.$confirm(`是否确定要删除客户"${row.name}"`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -88,7 +122,7 @@ export default {
       });
     }
   },
-  created() {
+  mounted () {
     this.fetch();
   }
 };
