@@ -9,7 +9,7 @@
             <el-menu-item index="/categories/create">新建分类</el-menu-item>
             <el-menu-item index="/categories/list">分类列表</el-menu-item>
           </el-menu-item-group>
-          <el-menu-item-group>
+          <!-- <el-menu-item-group>
             <template slot="title">物品</template>
             <el-menu-item index="/items/create">新建物品</el-menu-item>
             <el-menu-item index="/items/list">物品列表</el-menu-item>
@@ -18,7 +18,7 @@
             <template slot="title">英雄</template>
             <el-menu-item index="/heroes/create">新建英雄</el-menu-item>
             <el-menu-item index="/heroes/list">英雄列表</el-menu-item>
-          </el-menu-item-group>
+          </el-menu-item-group> -->
           <el-menu-item-group>
             <template slot="title">客户</template>
             <el-menu-item index="/customers/create">新建客户</el-menu-item>
@@ -37,7 +37,7 @@
       <el-header style="text-align: right; font-size: 12px;height:40px">
         <span>{{username}}</span>
         <el-dropdown trigger="click">
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <i class="el-icon-arrow-down el-icon--right" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native.prevent="leave">退出</el-dropdown-item>
           </el-dropdown-menu>

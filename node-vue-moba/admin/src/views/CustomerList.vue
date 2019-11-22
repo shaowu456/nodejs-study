@@ -18,7 +18,7 @@
                    @click="resetQuery">重置</el-button>
       </el-row>
     </el-form>
-    <el-table border
+    <el-table border stripe
               :data="items">
       <!-- <el-table-column prop="_id" label="ID" width="240"></el-table-column> -->
       <el-table-column prop="name"
