@@ -1,98 +1,263 @@
 <template>
   <div class="about">
     <h1 style="margin:0">{{id ? '编辑' : '新建'}}客户</h1>
-    <el-form label-width="120px" @submit.native.prevent="save">
-      <el-tabs value="bases" type="border-card">
-        <el-tab-pane name="bases" label="基础信息">
+    <el-form label-width="120px"
+             @submit.native.prevent="save">
+      <el-tabs value="history"
+               type="border-card">
+        <el-tab-pane name="bases"
+                     label="基础信息">
           <el-form-item label="姓名">
             <el-input v-model="model.name"></el-input>
           </el-form-item>
           <el-form-item label="电话">
             <el-input v-model="model.phone"></el-input>
           </el-form-item>
-          <el-form-item label="头像">
-            <el-upload
-              class="avatar-uploader"
-              :action="$http.defaults.baseURL+'/upload'"
-              :headers="getAuthHeader()"
-              :show-file-list="false"
-              :on-success="afterUpload"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="model.avatar" :src="model.avatar" class="avatar" />
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
           <el-form-item label="性别">
             <el-select v-model="model.sex">
-              <el-option
-                v-for="item of categories"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
+              <el-option v-for="item of categories"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="出生日期">
-            <el-date-picker
-              v-model="model.birthday"
-              value-format="yyyy-MM-dd"
-              align="right"
-              type="date"
-              placeholder="选择日期"
-              :picker-options="pickerOptions1"
-            ></el-date-picker>
+            <el-date-picker v-model="model.birthday"
+                            value-format="yyyy-MM-dd"
+                            align="right"
+                            type="date"
+                            placeholder="选择日期"
+                            :picker-options="pickerOptions1"></el-date-picker>
           </el-form-item>
           <el-form-item label="年龄">
-            <el-input :disabled="true" v-model="model.age"></el-input>
+            <el-input :disabled="true"
+                      v-model="model.age"></el-input>
           </el-form-item>
           <el-form-item label="地址">
             <el-input v-model="model.address"></el-input>
           </el-form-item>
         </el-tab-pane>
-        <el-tab-pane name="skills" label="详情">
-          <el-button size="small" @click="model.skills.push({})">
+        <el-tab-pane name="skills"
+                     label="详情">
+          <el-button size="small"
+                     @click="model.skills.push({})">
             <i class="el-icon-plus"></i> 添加
           </el-button>
-          <el-row type="flex" style="flex-wrap: wrap">
-            <el-col :md="12" v-for="(item, i) in model.skills" :key="i">
+          <el-row type="flex"
+                  style="flex-wrap: wrap">
+            <el-col :md="12"
+                    v-for="(item, i) in model.skills"
+                    :key="i">
               <el-form-item label="名称">
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
               <el-form-item label="图标">
-                <el-upload
-                  class="avatar-uploader"
-                  :action="uploadUrl"
-                  :headers="getAuthHeader()"
-                  :show-file-list="false"
-                  :on-success="res => $set(item, 'icon', res.url)"
-                >
-                  <img v-if="item.icon" :src="item.icon" class="avatar" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                <el-upload class="avatar-uploader"
+                           :action="uploadUrl"
+                           :headers="getAuthHeader()"
+                           :show-file-list="false"
+                           :on-success="res => $set(item, 'icon', res.url)">
+                  <img v-if="item.icon"
+                       :src="item.icon"
+                       class="avatar" />
+                  <i v-else
+                     class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
+              <div class="free_ipt_box">
+                <span>电脑验光</span>
+                <ul>
+                  <li></li>
+                  <li>球镜</li>
+                  <li>柱镜</li>
+                  <li>轴向</li>
+                  <li>瞳距</li>
+                </ul>
+                <ul>
+                  <li>OD</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                </ul>
+                <ul>
+                  <li>OS</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                </ul>
+              </div>
+              <div class="free_ipt_box">
+                <span>主观验光</span>
+                <ul>
+                  <li></li>
+                  <li>球镜</li>
+                  <li>柱镜</li>
+                  <li>轴向</li>
+                  <li>瞳距</li>
+                  <li>ADD</li>
+                </ul>
+                <ul>
+                  <li>OD</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                </ul>
+                <ul>
+                  <li>OS</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                </ul>
+                <ul>
+                  <li>主导眼</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li>双眼平衡</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                  <li>瞳距</li>
+                  <li><el-input v-model="item.name"></el-input></li>
+                </ul>
+              </div>
               <el-form-item label="创建日期">
-                <el-date-picker
-                  v-model="item.createDate"
-                  value-format="yyyy-MM-dd"
-                  align="right"
-                  type="date"
-                  placeholder="选择日期"
-                  :picker-options="pickerOptions1"
-                ></el-date-picker>
+                <el-date-picker v-model="item.createDate"
+                                value-format="yyyy-MM-dd"
+                                align="right"
+                                type="date"
+                                placeholder="选择日期"
+                                :picker-options="pickerOptions1"></el-date-picker>
               </el-form-item>
               <el-form-item label="描述">
-                <el-input v-model="item.description" type="textarea"></el-input>
+                <el-input v-model="item.description"
+                          type="textarea"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button size="small" type="danger" @click="model.skills.splice(i, 1)">删除</el-button>
+                <el-button size="small"
+                           type="danger"
+                           @click="model.skills.splice(i, 1)">删除</el-button>
               </el-form-item>
             </el-col>
           </el-row>
         </el-tab-pane>
+        <el-tab-pane name="history"
+                     label="历史信息">
+          <el-table border
+                    stripe
+                    :data="historyData">
+            <!-- <el-table-column prop="_id" label="ID" width="240"></el-table-column> -->
+            <el-table-column prop="project_name"
+                             label="项目名称"></el-table-column>
+            <el-table-column prop="r_eye"
+                             label="右眼（R）">
+              <template slot-scope="scope">
+                <el-input v-if="scope.$index ===0"
+                          v-model="model.histoyNakedR"
+                          placeholder></el-input>
+                <el-select v-if="scope.$index === 1"
+                           v-model="model.wearGtypeR">
+                  <el-option v-for="item in wearGtypes"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-input v-if="scope.$index ===2"
+                          v-model="model.visionR"
+                          placeholder></el-input>
+                <el-input v-if="scope.$index ===3"
+                          v-model="model.correctVisionR"
+                          placeholder></el-input>
+                <el-input v-if="scope.$index ===4"
+                          v-model="model.eyePressR"
+                          placeholder></el-input>
+                <el-select v-if="scope.$index === 5"
+                           v-model="model.eyePositionR">
+                  <el-option v-for="item in eyePositions"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-select v-if="scope.$index === 6"
+                           v-model="model.threedEyeR">
+                  <el-option v-for="item in threedEyes"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-select v-if="scope.$index === 7"
+                           v-model="model.colorFeelR">
+                  <el-option v-for="item in colorFeels"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-select v-if="scope.$index === 8"
+                           v-model="model.eyeCheckR">
+                  <el-option v-for="item in eyeChecks"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+              </template>
+            </el-table-column>
+            <el-table-column prop="l_eye"
+                             label="左眼（L）"><template slot-scope="scope">
+              <el-input v-if="scope.$index ===0"
+                                        v-model="model.histoyNakedL"
+                                        placeholder></el-input>
+                <el-select v-if="scope.$index === 1"
+                           v-model="model.wearGtypeL">
+                  <el-option v-for="item in wearGtypes"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-input v-if="scope.$index ===2"
+                          v-model="model.visionL"
+                          placeholder></el-input>
+                <el-input v-if="scope.$index ===3"
+                          v-model="model.correctVisionL"
+                          placeholder></el-input>
+                <el-input v-if="scope.$index ===4"
+                          v-model="model.eyePressL"
+                          placeholder></el-input>
+                <el-select v-if="scope.$index === 5"
+                           v-model="model.eyePositionL">
+                  <el-option v-for="item in eyePositions"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-select v-if="scope.$index === 6"
+                           v-model="model.threedEyeL">
+                  <el-option v-for="item in threedEyes"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-select v-if="scope.$index === 7"
+                           v-model="model.colorFeelL">
+                  <el-option v-for="item in colorFeels"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+                <el-select v-if="scope.$index === 8"
+                           v-model="model.eyeCheckL">
+                  <el-option v-for="item in eyeChecks"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value"></el-option>
+                </el-select>
+              </template></el-table-column>
+          </el-table>
+        </el-tab-pane>
       </el-tabs>
       <el-form-item>
-        <el-button type="primary" style="margin-top:2rem" native-type="submit">保存</el-button>
+        <el-button type="primary"
+                   style="margin-top:2rem"
+                   native-type="submit">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -104,8 +269,92 @@ export default {
   props: {
     id: {}
   },
-  data() {
+  data () {
     return {
+      wearGtypeR: '',
+      wearGtypeL: '',
+      wearGtypes: [
+        {
+          label: "未佩戴",
+          value: "未佩戴",
+        },
+        {
+          label: "框架眼镜",
+          value: "框架眼镜",
+        },
+        {
+          label: "隐形眼镜",
+          value: "隐形眼镜",
+        },
+        {
+          label: "夜戴角膜塑性镜",
+          value: "夜戴角膜塑性镜",
+        },
+        {
+          label: "未知",
+          value: "未知",
+        },
+      ],
+      eyePositionR: '',
+      eyePositionL: '',
+      eyePositions: [
+        {
+          label: "正常",
+          value: "正常"
+        },
+        {
+          label: "内斜视",
+          value: "内斜视"
+        },
+        {
+          label: "外斜视",
+          value: "外斜视"
+        },
+        {
+          label: "上下斜视",
+          value: "上下斜视"
+        }
+      ],
+      threedEyeR: '',
+      threedEyeL: '',
+      threedEyes: [
+        {
+          label: "无",
+          value: "无"
+        },
+        {
+          label: "有",
+          value: "有"
+        }
+      ],
+      colorFeelR: '',
+      colorFeelL: '',
+      colorFeels: [
+        {
+          label: "正常",
+          value: "正常"
+        },
+        {
+          label: "异常",
+          value: "异常"
+        }
+      ],
+      eyeCheckR: '',
+      eyeCheckL: '',
+      eyeChecks: [
+        {
+          label: "正常",
+          value: "正常"
+        },
+        {
+          label: "内翻",
+          value: "内翻"
+        },
+        {
+          label: "倒睫",
+          value: "倒睫"
+        }
+      ],
       categories: [
         {
           label: "男",
@@ -116,6 +365,45 @@ export default {
           value: "女"
         }
       ],
+      historyData: [
+        {
+          project_name: '裸眼视力',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '是否戴镜',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '戴镜视力',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '矫正视力',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '眼压',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '眼位',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '立体视',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '色觉',
+          r_eye: '',
+          l_eye: ''
+        }, {
+          project_name: '眼睑',
+          r_eye: '',
+          l_eye: ''
+        }
+      ],
       items: [],
       model: {
         name: "",
@@ -124,19 +412,19 @@ export default {
       },
       createDate: '',
       pickerOptions1: {
-        disabledDate(time) {
+        disabledDate (time) {
           return time.getTime() > Date.now();
         },
         shortcuts: [
           {
             text: "今天",
-            onClick(picker) {
+            onClick (picker) {
               picker.$emit("pick", new Date());
             }
           },
           {
             text: "昨天",
-            onClick(picker) {
+            onClick (picker) {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24);
               picker.$emit("pick", date);
@@ -144,7 +432,7 @@ export default {
           },
           {
             text: "一周前",
-            onClick(picker) {
+            onClick (picker) {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", date);
@@ -155,17 +443,20 @@ export default {
     };
   },
   watch: {
-    'model.birthday'(val) {
+    'model.birthday' (val) {
       debugger
       console.log(val)
       this.model.age = jsGetAgeByBirth(val)
     }
   },
   methods: {
-    async save() {
+    test (e) {
+      console.log(e)
+    },
+    async save () {
       // eslint-disable-next-line no-unused-vars
       let res;
-      let params = Object.assign({},this.model)
+      let params = Object.assign({}, this.model)
       if (this.id) {
         res = await this.$http.put(`rest/customers/${this.id}`, params);
       } else {
@@ -177,16 +468,16 @@ export default {
         message: "保存成功"
       });
     },
-    async fetch() {
+    async fetch () {
       const res = await this.$http.get(`rest/customers/${this.id}`);
       this.model = Object.assign({}, this.model, res.data);
     },
-    afterUpload(res) {
+    afterUpload (res) {
       // console.log(res)
       // this.model.avater = res.url
       this.$set(this.model, "avatar", res.url); //显示赋值
     },
-    beforeAvatarUpload(file) {
+    beforeAvatarUpload (file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -198,18 +489,26 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    async fetchItems() {
+    async fetchItems () {
       const res = await this.$http.get(`rest/items`);
       this.items = res.data;
     }
   },
-  created() {
+  created () {
     this.fetchItems();
     this.id && this.fetch();
   }
 };
 </script>
 <style>
+ul li{
+  list-style: none;
+}
+.free_ipt_box li{display: inline-block;width: 70px;margin-right: 10px}
+.free_ipt_box ul li:first-of-type{width: 50px;color: red;text-align: right}
+.about .el-select{
+  width: 100% !important
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

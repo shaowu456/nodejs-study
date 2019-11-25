@@ -59,8 +59,8 @@ module.exports = app => {
 
   app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async (req, res) => {
     const file = req.file
-    // file.url = `http://localhost:3000/uploads/${file.filename}`
-    file.url = `http://111.231.100.197/uploads/${file.filename}`
+    file.url = `http://localhost:3000/uploads/${file.filename}`
+    // file.url = `http://111.231.100.197/uploads/${file.filename}`
     res.send(file)
   })
 
@@ -114,7 +114,7 @@ module.exports = app => {
       phone: new RegExp(phone)
     }).skip((pageIndex-1) * pageSize).limit(pageSize)  // 关联查询parent
     items.forEach(item => {
-      item.age = utils.jsGetAgeByBirth(item.birthday)
+      item.age = item.birthday&&utils.jsGetAgeByBirth(item.birthday) || ''
     })
     const count = await Model.where({
       name: new RegExp(name),
