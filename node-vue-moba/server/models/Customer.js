@@ -29,20 +29,39 @@ const schema = new mongoose.Schema({
   colorFeelL: { type: String },
   eyeCheckR: { type: String },
   eyeCheckL: { type: String },
-  scores: {
-    difficult: { type: Number },
-    skills: { type: Number },
-    attack: { type: Number },
-    survive: { type: Number }
-  },
   skills: [{
+    iconLists: [
+      {
+        name: {type: String}, 
+        icon: {type: String} 
+      }
+    ],
     icon: { type: String },
     name: { type: String },
     description: { type: String },
     createDate: { type: String },
     delay:{ type: String },
     cost:{ type: String },
-    tips: { type: String }
+    tips: { type: String },
+    pcODqj: { type: String },
+    pcODzj: { type: String },
+    pcODzx: { type: String },
+    pcODtj: { type: String },
+    pcOSqj: { type: String },
+    pcOSzj: { type: String },
+    pcOSzx: { type: String },
+    obODqj: { type: String },
+    obODzj: { type: String },
+    obODzx: { type: String },
+    obODtj: { type: String },
+    obODadd: { type: String },
+    obOSqj: { type: String },
+    obOSzj: { type: String },
+    obOSzx: { type: String },
+    obOStj: { type: String },
+    obZDYqj: { type: String },
+    obZDYzx: { type: String },
+    obZDYadd: { type: String }
   }],
   usageTips: { type: String },
   battleTips: { type: String },

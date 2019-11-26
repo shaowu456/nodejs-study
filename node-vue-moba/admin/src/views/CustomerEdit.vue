@@ -51,8 +51,16 @@
               <el-form-item label="名称">
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
+              <el-form-item label="创建日期">
+                <el-date-picker v-model="item.createDate"
+                                value-format="yyyy-MM-dd"
+                                align="right"
+                                type="date"
+                                placeholder="选择日期"
+                                :picker-options="pickerOptions1"></el-date-picker>
+              </el-form-item>
               <el-form-item label="图标">
-                <el-upload class="avatar-uploader"
+                <!-- <el-upload class="avatar-uploader"
                            :action="uploadUrl"
                            :headers="getAuthHeader()"
                            :show-file-list="false"
@@ -62,10 +70,19 @@
                        class="avatar" />
                   <i v-else
                      class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload> -->
+                <el-upload
+                  :action="uploadUrl"
+                  :headers="getAuthHeader()"
+                  list-type="picture-card"
+                  :file-list="editFiles"
+                  :show-file-list="true"
+                  >
+                  <i class="el-icon-plus"></i>
                 </el-upload>
               </el-form-item>
               <div class="free_ipt_box">
-                <span>电脑验光</span>
+                <span class="free_title">电脑验光</span>
                 <ul>
                   <li></li>
                   <li>球镜</li>
@@ -75,20 +92,20 @@
                 </ul>
                 <ul>
                   <li>OD</li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.pcODqj"></el-input></li>
+                  <li><el-input v-model="item.pcODzj"></el-input></li>
+                  <li><el-input v-model="item.pcODzx"></el-input></li>
+                  <li><el-input v-model="item.pcODtj"></el-input></li>
                 </ul>
                 <ul>
                   <li>OS</li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.pcOSqj"></el-input></li>
+                  <li><el-input v-model="item.pcOSzj"></el-input></li>
+                  <li><el-input v-model="item.pcOSzx"></el-input></li>
                 </ul>
               </div>
               <div class="free_ipt_box">
-                <span>主观验光</span>
+                <span class="free_title">主观验光</span>
                 <ul>
                   <li></li>
                   <li>球镜</li>
@@ -99,36 +116,28 @@
                 </ul>
                 <ul>
                   <li>OD</li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.obODqj"></el-input></li>
+                  <li><el-input v-model="item.obODzj"></el-input></li>
+                  <li><el-input v-model="item.obODzx"></el-input></li>
+                  <li><el-input v-model="item.obODtj"></el-input></li>
+                  <li><el-input v-model="item.obODadd"></el-input></li>
                 </ul>
                 <ul>
                   <li>OS</li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.obOSqj"></el-input></li>
+                  <li><el-input v-model="item.obOSzj"></el-input></li>
+                  <li><el-input v-model="item.obOSzx"></el-input></li>
+                  <li><el-input v-model="item.obOStj"></el-input></li>
                 </ul>
                 <ul>
                   <li>主导眼</li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.obZDYqj"></el-input></li>
                   <li>双眼平衡</li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.obZDYzx"></el-input></li>
                   <li>瞳距</li>
-                  <li><el-input v-model="item.name"></el-input></li>
+                  <li><el-input v-model="item.obZDYadd"></el-input></li>
                 </ul>
               </div>
-              <el-form-item label="创建日期">
-                <el-date-picker v-model="item.createDate"
-                                value-format="yyyy-MM-dd"
-                                align="right"
-                                type="date"
-                                placeholder="选择日期"
-                                :picker-options="pickerOptions1"></el-date-picker>
-              </el-form-item>
               <el-form-item label="描述">
                 <el-input v-model="item.description"
                           type="textarea"></el-input>
@@ -444,7 +453,6 @@ export default {
   },
   watch: {
     'model.birthday' (val) {
-      debugger
       console.log(val)
       this.model.age = jsGetAgeByBirth(val)
     }
@@ -506,6 +514,7 @@ ul li{
 }
 .free_ipt_box li{display: inline-block;width: 70px;margin-right: 10px}
 .free_ipt_box ul li:first-of-type{width: 50px;color: red;text-align: right}
+.free_ipt_box .free_title{margin-left: 30px}
 .about .el-select{
   width: 100% !important
 }
