@@ -71,15 +71,10 @@
                   <i v-else
                      class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload> -->
-                <el-upload
-                  :action="uploadUrl"
-                  :headers="getAuthHeader()"
-                  list-type="picture-card"
-                  :file-list="editFiles"
-                  :show-file-list="true"
-                  >
-                  <i class="el-icon-plus"></i>
-                </el-upload>
+                <Up-Loadimgs></Up-Loadimgs>
+                <el-dialog :visible.sync="dialogVisible">
+                  <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
               </el-form-item>
               <div class="free_ipt_box">
                 <span class="free_title">电脑验光</span>
@@ -274,9 +269,13 @@
 
 <script>
 import { jsGetAgeByBirth } from '@/lib/utils'
+import UpLoadimgs from '@/components/UploadImgs.vue'
 export default {
   props: {
     id: {}
+  },
+  components:{
+    UpLoadimgs
   },
   data () {
     return {
@@ -458,9 +457,6 @@ export default {
     }
   },
   methods: {
-    test (e) {
-      console.log(e)
-    },
     async save () {
       // eslint-disable-next-line no-unused-vars
       let res;
@@ -503,6 +499,7 @@ export default {
     }
   },
   created () {
+    window.vue = this
     this.fetchItems();
     this.id && this.fetch();
   }

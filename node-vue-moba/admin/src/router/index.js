@@ -17,10 +17,12 @@ import CustomerList from '../views/CustomerList.vue'
 
 import AdminUserEdit from '../views/AdminUserEdit.vue'
 import AdminUserList from '../views/AdminUserList.vue'
+import UploadImgs from '../components/UploadImgs.vue'
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/login', name: 'login', component: Login, meta: { isPublic: true } },
+  { path: '/upload', name: 'upload', component: UploadImgs, meta: { isPublic: true } },
   {
     path: '/',
     name: 'home',

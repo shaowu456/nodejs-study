@@ -33,7 +33,7 @@ const schema = new mongoose.Schema({
     iconLists: [
       {
         name: {type: String}, 
-        icon: {type: String} 
+        url: {type: String} 
       }
     ],
     icon: { type: String },
