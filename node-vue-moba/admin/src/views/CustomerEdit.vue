@@ -71,10 +71,7 @@
                   <i v-else
                      class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload> -->
-                <Up-Loadimgs></Up-Loadimgs>
-                <el-dialog :visible.sync="dialogVisible">
-                  <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog>
+                <Up-Loadimgs :PfileList.sync="item.iconLists"></Up-Loadimgs>
               </el-form-item>
               <div class="free_ipt_box">
                 <span class="free_title">电脑验光</span>

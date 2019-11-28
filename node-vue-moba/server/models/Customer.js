@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 
 // 创建模型 构建其属性
-const schema = new mongoose.Schema({  
+const schema = new mongoose.Schema({
   name: { type: String },
   avatar: { type: String },
   phone: { type: String },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my_upload">
     <el-upload
       multiple
       :action="uploadUrl"
@@ -34,14 +34,15 @@ export default {
       default: 60
     },
     PfileList: {
-      type: Array
+      type: Array,
+      default:()=>{
+        return []
+      }
     }
   },
   data() {
     return {
-      fileList: [
-        {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
-      ],
+      fileList: this.PfileList,
       dialogImageUrl: '',
       dialogVisible: false,
       uploadComplete: true // 图片上传完成状态
@@ -74,9 +75,14 @@ export default {
     },
     // 上传图片成功
     uploadSuccess(res, file, fileList) {
+      debugger
       console.log(fileList)
       this.uploadComplete = true;
-      this.fileChange(fileList);
+      this.fileList.push({
+        name:res.originalname,
+        url:res.url
+      })
+      console.log(this.fileList)
     },
     // 上传图片出错
     // eslint-disable-next-line no-unused-vars
@@ -84,23 +90,25 @@ export default {
       this.$message.error("上传出错");
     },
     // 移除图片
+    // eslint-disable-next-line no-unused-vars
     handleRemove(file, fileList) {
-      this.fileChange(fileList);
-    },
-    // 设置fileList值
-    fileChange(fileList) {
-      this.fileList = []
-      if(fileList.length > 0){
-        for(let i=0; i<fileList.length; i++){
-          if(fileList[i].status === 'success'){
-            this.fileList.push({
-              name:fileList[i].name,
-              url:fileList[i].url
-            })
-          }
-        }
-      }
-    },
+      let index = this.fileList.findIndex((item) => {
+        return item.name === file.name
+      })
+      this.fileList.splice(index,1)
+      console.log(index)
+    }
   }
 }
 </script>
+<style>
+.my_upload .el-upload-list--picture-card .el-upload-list__item{
+  width: 108px !important;
+  height: 108px !important;
+}
+.my_upload  .el-upload--picture-card{
+  width: 108px !important;
+  height: 108px !important; 
+  line-height: 120px !important;
+}
+</style>
