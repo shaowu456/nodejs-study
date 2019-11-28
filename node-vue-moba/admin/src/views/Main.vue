@@ -76,7 +76,7 @@
     ...mapGetters(['logininfo'])
     },
     mounted(){
-      this.username = this.logininfo._doc.username
+      this.username = this.logininfo._doc.address
     },
     methods: {
       leave(){

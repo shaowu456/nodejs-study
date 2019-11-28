@@ -38,11 +38,18 @@ export default {
       default:()=>{
         return []
       }
+    },
+    fakePfileList: {
+      type: Array,
+      default:()=>{
+        return []
+      }
     }
   },
   data() {
     return {
       fileList: this.PfileList,
+      fakeFileList:  [],
       dialogImageUrl: '',
       dialogVisible: false,
       uploadComplete: true // 图片上传完成状态
@@ -54,6 +61,12 @@ export default {
     },
     fileList(val) {
       this.$emit('update:PfileList', val)
+    },
+    fakePfileList(val){
+      this.fakeFileList = val
+    },
+    fakeFileList(val) {
+      this.$emit('update:fakePfileList', val)
     },
   },
   methods: {
@@ -75,14 +88,16 @@ export default {
     },
     // 上传图片成功
     uploadSuccess(res, file, fileList) {
-      debugger
-      console.log(fileList)
-      this.uploadComplete = true;
-      this.fileList.push({
-        name:res.originalname,
-        url:res.url
+      this.fakeFileList = []
+      fileList.map(item=>{
+        let url = ''
+        item.response?url = item.response.url:url = item.url
+        this.fakeFileList.push({
+          name:item.name,
+          url
+        })
       })
-      console.log(this.fileList)
+      this.uploadComplete = true;
     },
     // 上传图片出错
     // eslint-disable-next-line no-unused-vars
@@ -92,11 +107,15 @@ export default {
     // 移除图片
     // eslint-disable-next-line no-unused-vars
     handleRemove(file, fileList) {
-      let index = this.fileList.findIndex((item) => {
-        return item.name === file.name
+      this.fakeFileList = []
+      fileList.map(item=>{
+        let url = ''
+        item.response?url = item.response.url:url = item.url
+        this.fakeFileList.push({
+          name:item.name,
+          url
+        })
       })
-      this.fileList.splice(index,1)
-      console.log(index)
     }
   }
 }

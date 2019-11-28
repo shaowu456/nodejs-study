@@ -10,7 +10,8 @@ const schema = new mongoose.Schema({
     set(val) {
       return require('bcrypt').hashSync(val, 9) //调用bcrypt模块的加密方法，10位加密指数，越大密码越复杂
     }
-  }
+  },
+  address: { type: String }
 })
 
 //模型导出

@@ -60,18 +60,7 @@
                                 :picker-options="pickerOptions1"></el-date-picker>
               </el-form-item>
               <el-form-item label="图标">
-                <!-- <el-upload class="avatar-uploader"
-                           :action="uploadUrl"
-                           :headers="getAuthHeader()"
-                           :show-file-list="false"
-                           :on-success="res => $set(item, 'icon', res.url)">
-                  <img v-if="item.icon"
-                       :src="item.icon"
-                       class="avatar" />
-                  <i v-else
-                     class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload> -->
-                <Up-Loadimgs :PfileList.sync="item.iconLists"></Up-Loadimgs>
+                <Up-Loadimgs :PfileList.sync="item.iconLists" :fakePfileList.sync="item.fakeIconLists"></Up-Loadimgs>
               </el-form-item>
               <div class="free_ipt_box">
                 <span class="free_title">电脑验光</span>
@@ -459,6 +448,10 @@ export default {
       let res;
       let params = Object.assign({}, this.model)
       if (this.id) {
+        params.skills.forEach(item => {
+          item.fakeIconLists&&(item.iconLists = item.fakeIconLists)
+        });
+        // params.iconLists = params.fakeIconLists
         res = await this.$http.put(`rest/customers/${this.id}`, params);
       } else {
         res = await this.$http.post("rest/customers", params);

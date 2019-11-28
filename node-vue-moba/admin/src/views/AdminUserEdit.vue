@@ -9,6 +9,9 @@
       <el-form-item label="密码">
         <el-input v-model="model.password"></el-input>
       </el-form-item>
+      <el-form-item label="地址">
+        <el-input v-model="model.address"></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary"
                    native-type="submit">保存</el-button>
@@ -37,6 +40,7 @@ export default {
         res = await this.$http.post('rest/admin_users', this.model)
       }
       this.$router.push('/admin_users/list')
+      
       this.$message({
         type: 'success',
         message: '保存成功'

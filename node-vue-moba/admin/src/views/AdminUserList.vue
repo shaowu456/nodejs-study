@@ -4,6 +4,7 @@
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="240"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="address" label="地址"></el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
         <template slot-scope="scope">
           <el-button
