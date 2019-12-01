@@ -56,9 +56,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from ,next) => {
-  console.log(store.getters)
   // console.log(store.getters.logininfo._doc.username)
-  debugger
   if (!to.meta.isPublic && !localStorage.token) {
     return next('/login')
   }
