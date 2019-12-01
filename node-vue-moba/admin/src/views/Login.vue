@@ -42,7 +42,6 @@ export default {
 .login-container{
   background-repeat: no-repeat;
   background-size: cover;
-  background:url(../assets/img/loginbg.jpg);
   height: 100vh;
 }
 .login-card{
