@@ -1,7 +1,6 @@
 <template>
   <div class="my_upload">
     <el-upload
-      multiple
       :action="uploadUrl"
       :headers="getAuthHeader()"
       list-type="picture-card"

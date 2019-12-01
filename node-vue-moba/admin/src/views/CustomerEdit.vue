@@ -3,7 +3,7 @@
     <h1 style="margin:0">{{id ? '编辑' : '新建'}}客户</h1>
     <el-form label-width="120px"
              @submit.native.prevent="save">
-      <el-tabs value="history"
+      <el-tabs value="bases"
                type="border-card">
         <el-tab-pane name="bases"
                      label="基础信息">

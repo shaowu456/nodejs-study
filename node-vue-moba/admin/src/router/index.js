@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 // import Home from '../views/Home.vue'
 import Main from '../views/Main.vue'
 import Login from '../views/Login.vue'
@@ -55,8 +56,16 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from ,next) => {
+  console.log(store.getters)
+  // console.log(store.getters.logininfo._doc.username)
+  debugger
   if (!to.meta.isPublic && !localStorage.token) {
     return next('/login')
+  }
+  if (!to.meta.isPublic && to.path.indexOf('customers')<0) {
+    if(store.getters.logininfo._doc.username !='superadmin'){
+      return next('/login')
+    }
   }
   next()
 })

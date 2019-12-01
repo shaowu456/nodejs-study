@@ -28,7 +28,7 @@ export default {
       const res = await this.$store.dispatch('login', this.model)
       // sessionStorage.token = res.data.token
       localStorage.token = res.data.token
-      this.$router.push('/')
+      this.$router.push('/customers/list')
       this.$message({
         type: 'success',
         message: '登录成功'
