@@ -1,6 +1,7 @@
 <template>
   <div class="my_upload">
     <el-upload
+    :class="{notSuperadmin:!$store.state.user.isSuperadmin}"
       :action="uploadUrl"
       :headers="getAuthHeader()"
       list-type="picture-card"
@@ -115,6 +116,9 @@ export default {
           url
         })
       })
+    },
+    handleRemove2(){
+      return false
     }
   }
 }
@@ -128,5 +132,8 @@ export default {
   width: 108px !important;
   height: 108px !important; 
   line-height: 120px !important;
+}
+.notSuperadmin .el-upload-list__item-delete{
+  display: none !important;
 }
 </style>

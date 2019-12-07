@@ -127,10 +127,7 @@ module.exports = app => {
     items.forEach(item => {
       item.age = item.birthday&&utils.jsGetAgeByBirth(item.birthday) || ''
     })
-    const count = await Model.where({
-      name: new RegExp(name),
-      phone: new RegExp(phone)
-    }).count()
+    const count = await Model.where(findFilter).count()
     let result = {
       count,
       items
