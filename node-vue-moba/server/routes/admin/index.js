@@ -60,12 +60,12 @@ module.exports = app => {
   app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async (req, res) => {
     const file = req.file
     console.log('~~~~~~~~~~~~~~~~!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    let ip = require('ip').address()
-    if(ip !=='111.231.100.197' && ip !=='193.112.102.43'){ //hsw && hyh
-      ip = 'localhost:3000'
-    }
-    file.url = `http://${ip}/uploads/${file.filename}`
-    // file.url = `http://111.231.100.197/uploads/${file.filename}`
+    // let ip = require('ip').address()
+    // if(ip !=='111.231.100.197' && ip !=='193.112.102.43'){ //hsw && hyh
+    //   ip = 'localhost:3000'
+    // }
+    // file.url = `http://localhost:3000/uploads/${file.filename}`
+    file.url = `http://111.231.100.197/uploads/${file.filename}`
     res.send(file)
   })
 

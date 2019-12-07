@@ -8,6 +8,7 @@ pm2命令
     pm2 start index.js 启动服务
     pm2 list 看启动了哪些服务
     pm2 logs index   index为appname
+    pm2 stop index
 curl 请求一个地址 比如 curl http://localhost:3000
 n latest 使用最新版
 
