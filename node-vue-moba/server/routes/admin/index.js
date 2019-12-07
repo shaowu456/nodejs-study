@@ -65,8 +65,8 @@ module.exports = app => {
     //   ip = 'localhost:3000'
     // }
     // file.url = `http://localhost:3000/uploads/${file.filename}`
-    // file.url = `http://193.112.102.43/uploads/${file.filename}`
-    file.url = `http://111.231.100.197/uploads/${file.filename}`
+    file.url = `http://193.112.102.43/uploads/${file.filename}`
+    // file.url = `http://111.231.100.197/uploads/${file.filename}`
     res.send(file)
   })
 
