@@ -65,6 +65,7 @@ module.exports = app => {
     //   ip = 'localhost:3000'
     // }
     // file.url = `http://localhost:3000/uploads/${file.filename}`
+    // file.url = `http://193.112.102.43/uploads/${file.filename}`
     file.url = `http://111.231.100.197/uploads/${file.filename}`
     res.send(file)
   })
@@ -113,11 +114,16 @@ module.exports = app => {
   // 查询带模糊姓名的顾客列表
   app.post('/admin/api/findCustomers', authMiddleware(), async (req, res) => {
     const {pageIndex, pageSize, name, phone } = req.body
+    console.log(phone)
     const Model = require(`../../models/Customer`)
-    const items = await Model.find({
-      name: new RegExp(name),
-      phone: new RegExp(phone)
-    }).skip((pageIndex-1) * pageSize).limit(pageSize)  // 关联查询parent
+    let items = []
+    let findFilter = {
+      name: new RegExp(name)
+    }
+    
+    phone&&(findFilter.phone=new RegExp(phone)) // 正则里面无法匹配null的值 略坑
+    items = await Model.find(findFilter).skip((pageIndex-1) * pageSize).limit(pageSize)  // 关联查询parent
+
     items.forEach(item => {
       item.age = item.birthday&&utils.jsGetAgeByBirth(item.birthday) || ''
     })

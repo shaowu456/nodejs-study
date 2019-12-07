@@ -446,6 +446,8 @@ export default {
       // eslint-disable-next-line no-unused-vars
       let res;
       let params = Object.assign({}, this.model)
+      !params.name&&(params.name = '')
+      !params.phone&&(params.phone = '')
       if (this.id) {
         params.skills.forEach(item => {
           item.fakeIconLists&&(item.iconLists = item.fakeIconLists)

@@ -33,3 +33,6 @@ service mongod stop 停止
 sudo service mongod restart 重启
 
 tail -f /var/log/mongodb/mongod.log 查看日志
+
+查询方法
+https://www.jianshu.com/p/554a5bf67b31
