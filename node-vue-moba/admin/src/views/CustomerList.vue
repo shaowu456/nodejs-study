@@ -18,7 +18,7 @@
                    @click="resetQuery">重置</el-button>
       </el-row>
     </el-form>
-    <el-table border stripe
+    <el-table border stripe @row-click="rowClik"
               :data="items">
       <!-- <el-table-column prop="_id" label="ID" width="240"></el-table-column> -->
       <el-table-column prop="name"
@@ -46,16 +46,16 @@
                        label="地址"
                        min-width="100"
                        show-overflow-tooltip></el-table-column>
-      <el-table-column fixed="right"
+      <el-table-column fixed="right" v-if="$store.state.user.isSuperadmin"
                        label="操作"
                        width="120">
         <template slot-scope="scope">
           <el-button type="text"
                      size="small"
-                     @click="$router.push(`/customers/edit/${scope.row._id}`)">编辑</el-button>
+                     @click.stop="$router.push(`/customers/edit/${scope.row._id}`)">编辑</el-button>
           <el-button type="text"
                      size="small"
-                     @click="remove(scope.row)">删除</el-button>
+                      @click.stop="remove(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -85,6 +85,9 @@ export default {
     };
   },
   methods: {
+    rowClik(row){
+      this.$router.push(`/customers/edit/${row._id}`)
+    },
     async query () {
       this.fetch()
     },

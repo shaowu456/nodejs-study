@@ -3,7 +3,7 @@
     <h1 style="margin:0">{{id ? '编辑' : '新建'}}客户</h1>
     <el-form label-width="120px"
              @submit.native.prevent="save">
-      <el-tabs value="bases"
+      <el-tabs value="skills"
                type="border-card">
         <el-tab-pane name="bases"
                      label="基础信息">
@@ -40,7 +40,7 @@
         <el-tab-pane name="skills"
                      label="详情">
           <el-button size="small"
-                     @click="model.skills.push({})">
+                     @click="model.skills.push({createDate:(new Date)})">
             <i class="el-icon-plus"></i> 添加
           </el-button>
           <el-row type="flex"
@@ -69,14 +69,14 @@
                   <li>球镜</li>
                   <li>柱镜</li>
                   <li>轴向</li>
-                  <li>瞳距</li>
+                  <!-- <li>瞳距</li> -->
                 </ul>
                 <ul>
                   <li>OD</li>
                   <li><el-input v-model="item.pcODqj"></el-input></li>
                   <li><el-input v-model="item.pcODzj"></el-input></li>
                   <li><el-input v-model="item.pcODzx"></el-input></li>
-                  <li><el-input v-model="item.pcODtj"></el-input></li>
+                  <!-- <li><el-input v-model="item.pcODtj"></el-input></li> -->
                 </ul>
                 <ul>
                   <li>OS</li>
@@ -123,7 +123,7 @@
                 <el-input v-model="item.description"
                           type="textarea"></el-input>
               </el-form-item>
-              <el-form-item>
+              <el-form-item v-if="$store.state.user.isSuperadmin">
                 <el-button size="small"
                            type="danger"
                            @click="model.skills.splice(i, 1)">删除</el-button>
@@ -438,7 +438,6 @@ export default {
   },
   watch: {
     'model.birthday' (val) {
-      console.log(val)
       this.model.age = jsGetAgeByBirth(val)
     }
   },

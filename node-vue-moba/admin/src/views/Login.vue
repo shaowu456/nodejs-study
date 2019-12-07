@@ -26,6 +26,7 @@ export default {
     async login(){
       // const res = await this.$http.post('login', this.model)
       const res = await this.$store.dispatch('login', this.model)
+      // this.state.user.isSuperadmin
       // sessionStorage.token = res.data.token
       localStorage.token = res.data.token
       this.$router.push('/customers/list')

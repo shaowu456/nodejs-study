@@ -8,6 +8,7 @@ const state = {
   userinfo: {}, // 登录的基本信息
   locationId: '', // 当前选择的仓库Id
   routerName: [],
+  isSuperadmin: '',
   captchaCreate: ''
 }
 const getters = {
@@ -18,6 +19,9 @@ const getters = {
 const mutations = {
   SET_LOGININFO(state, params) {
     state.logininfo = params
+  },
+  SET_SUPERADMIN(state, params){
+    state.isSuperadmin = params
   }
 }
 const actions = {
@@ -27,13 +31,20 @@ const actions = {
         .then(res => {
           let logininfo = res.data
           commit('SET_LOGININFO', logininfo) // 存储登录信息
+          let username = logininfo._doc.username
+          commit('SET_SUPERADMIN', !!(username === 'superadmin')) // 存储登录信息
           console.log(state)
+          console.log(logininfo)
           resolve(res)
         })
         .catch(error => {
           reject(error)
         })
     })
+  },
+  isSuperadmin(){
+    // debugger
+    // return this.state.user.isSuperadmin
   }
 }
 
