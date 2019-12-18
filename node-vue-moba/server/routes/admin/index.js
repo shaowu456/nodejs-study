@@ -134,6 +134,37 @@ module.exports = app => {
     }
     res.send(result)
   })
+  // 查询空详情顾客列表
+  app.post('/admin/api/findFilterCustomers', authMiddleware(), async (req, res) => {
+    const {pageIndex, pageSize, name, phone } = req.body
+    console.log(phone)
+    const Model = require(`../../models/Customer`)
+    let items = []
+    let findFilter = {
+      $or : [ //多条件，数组
+          {skills : []},
+          {
+            $and: [
+              {'skills.iconLists' : []},
+              {'skills.pcODqj' : null}
+            ]
+          }
+         
+      ]
+    }
+    
+    items = await Model.find(findFilter).skip((pageIndex-1) * pageSize).limit(pageSize)  // 关联查询parent
+
+    items.forEach(item => {
+      item.age = item.birthday&&utils.jsGetAgeByBirth(item.birthday) || ''
+    })
+    const count = await Model.where(findFilter).count()
+    let result = {
+      count,
+      items
+    }
+    res.send(result)
+  })
   // 错误处理函数
   app.use(async (err, req, res, next) => {
     console.log(err)

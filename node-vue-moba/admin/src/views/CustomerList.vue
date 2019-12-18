@@ -16,6 +16,9 @@
         <el-button size="medium"
                    class="goodsbtnbox"
                    @click="resetQuery">重置</el-button>
+        <el-button size="medium"
+                   class="goodsbtnbox"
+                   @click="filterQuery">过滤</el-button>
       </el-row>
     </el-form>
     <el-table border stripe @row-click="rowClik"
@@ -101,6 +104,16 @@ export default {
     async fetch () {
       // const res = await this.$http.get("rest/customers");
       const res = await this.$http.post(`findCustomers`, {
+         name: this.model.name, 
+         phone: this.model.phone,
+         pageIndex: this.$refs.paginations.currentPage, // 当前页
+         pageSize: this.$refs.paginations.pagesize // 每页大小
+         });
+      this.items = res.data.items;
+      this.datatotal = res.data.count
+    },
+    async filterQuery() {
+      const res = await this.$http.post(`findFilterCustomers`, {
          name: this.model.name, 
          phone: this.model.phone,
          pageIndex: this.$refs.paginations.currentPage, // 当前页
